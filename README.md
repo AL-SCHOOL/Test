@@ -1,3 +1,3 @@
 # Test
-Just a test for Gi
-thub
+Just a test website I made.
+
