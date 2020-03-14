@@ -1,3 +1,1 @@
-# Test
-Just a test website I made.
-
+This is just a test website I made.
