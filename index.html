@@ -11,14 +11,15 @@
   
 <img src="https://i.kym-cdn.com/entries/icons/facebook/000/027/475/Screen_Shot_2018-10-25_at_11.02.15_AM.jpg" width="500" height="300">
  
-First name:<br>
-<input type="text" name="firstname">
-<br>
-Last name:<br>
-<input type="text" name="lastname">
-<br>
-<input type="button" value="Send" onclick="MyFunction()">
-    <div id="here"></div>
+<script>  
+var first, second;
+    first = document.getElementById("firstname").value;
+    second = document.getElementById("lastname").value;
+
+    document.GetElementById("here").InnerHTML = first;
+    document.GetElementById("here").InnerHTML = second;
+document.getElementById("demo").innerHTML = first + second;  
+ </script>
   
 </body>
 </html>
