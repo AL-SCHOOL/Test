@@ -1,0 +1,331 @@
+    <!doctype html>
+    <html lang="en">
+    <head>
+    	<meta charset="utf-8">
+    	<title>Space Arcade</title>
+    	<style>
+         * { margin: 0; 
+    	padding: 0;
+    }
+
+    @font-face {
+        font-family: 'spaceAge';
+        src: url('../fonts/space_age-webfont.eot');
+        src: url('../fonts/space_age-webfont.eot?#iefix') format('embedded-opentype'),
+             url('../fonts/space_age-webfont.woff') format('woff'),
+             url('../fonts/space_age-webfont.ttf') format('truetype'),
+             url('../fonts/space_age-webfont.svg#space_ageregular') format('svg');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    #introScreen {
+    	margin: 50px auto;
+    	padding: 50px 30px;
+    	width: 540px;
+    	height: 350px;
+    	position: relative;
+    	background-color: #0d152a;
+    	font-family: Arial, Helvetica, sans-serif;
+    	color: white;
+    }
+    #title {
+    	font-size: 32px;
+    	line-height: 1.1em;
+    	font-family: spaceAge;
+    }
+    #introScreen img {
+    	float: left;
+    	margin-right: 20px;
+    }
+    #introScreen h3 {
+    	clear: both;
+    	font-family: spaceAge;
+    	margin-top: 40px;
+    }
+    #introScreen div {
+    	margin-top: 40px;
+    	text-align: center;
+    }
+
+    button {
+    	font-family: spaceAge;
+    	font-size: 150%;
+    	padding: 4px 8px;
+    	cursor: pointer;
+    	color: white;
+
+    	-webkit-border-radius: 10px;
+    	-moz-border-radius: 10px;
+    	border-radius: 10px;
+
+    	background: -webkit-linear-gradient(top, #a3a3a3, #000);
+    	background: -moz-linear-gradient(top, #a3a3a3, #000);
+    	background: linear-gradient(top, #a3a3a3, #000);
+
+    	-webkit-box-shadow: 0px 5px 8px 3px rgba(255,255,255,0.3);
+    	-moz-box-shadow: 0px 5px 8px 3px rgba(255,255,255,0.3);
+    	box-shadow: 0px 5px 8px 3px rgba(255,255,255,0.3);
+    }
+    button:hover {
+    	background: -webkit-linear-gradient(top, #acc7a3, #506651);
+    	background: -moz-linear-gradient(top, #acc7a3, #506651);
+    	background: linear-gradient(top, #acc7a3, #506651);	
+    }
+    #gameScreen {
+    	margin: 50px auto;
+    	width: 600px;
+    	height: 450px;
+    	background-image: url("../images/bkg.jpg");
+    	display:none;
+    	position: relative;
+    }
+    #rocket {
+    	position: absolute;
+    	display: none;
+    }
+    #torpedo {
+    	position: absolute;
+
+    	/* transition */
+    	-webkit-transition: left 0.5s ease-out 0s;
+    	-moz-transition: left 0.5s ease-out 0s;
+    	transition: left 0.5s ease-out 0s;
+    }
+    #ufo {
+    	position: absolute;
+    	display: none;
+    	
+    }
+    #gameUI {
+    	width: 560px;
+    	height: 50px;
+    	padding: 10px 20px;
+    	background-color: rgba(0,0,0,0.5);
+    	color: white;
+    	font-family: spaceAge;
+    	line-height: 1em;
+    }
+    #gameInfo {
+    	width: 450px;
+    	height: 120px;
+    	font-size: 120%;
+    	float: left;
+    }
+    #gameControls {
+    	width: 50px;
+    	height: 55px;
+    	padding-top: 5px;
+    	float:left;
+    }
+    </style>
+    </head>
+
+    <body>
+    	<section id="introScreen">
+    		<img src="images/introImage.jpg" alt="intro image">
+    		<span id="title">Big<br>Space<br>Sprite<br>Mover</span>
+    		<h3>How to play:</h3>
+    		<p>Use the arrow keys to move the rocket ship up, down, left, or right. Hit the <strong>Fire!</strong> button to fire a photon torpedo.</p>
+    		<div>
+    			<button id="start">Engage!</button>
+    		</div>
+    	</section>
+
+    	<section id="gameScreen">
+    		<div id="gameUI">
+    			<div id="gameInfo">
+    				<p>Dilithium fuel: 100%</p>
+    				<p>Phasers: 25</p>
+    				<p>Photon torpedoes: 10</p>
+    			</div>
+    			<div id="gameControls">
+    				<button type= button id="fire" >Fire!</button>
+    			</div>			
+    		</div>
+
+    		<!-- absolutely positioned elements -->
+    		<img id="ufo" src="images/ufo.png" alt="UFO">
+    		<img id="torpedo" src="images/torpedo.png" alt="torpedo">
+    		<img id="rocket" src="images/rocket.png" alt="Rocket Ship sprite">
+    	</section>
+        
+        
+       <!--<input type="button" value="PLAY"  onclick="play()">
+    <audio id="audio" src="photon.mp3" ></audio>-->
+
+
+        
+        <audio id="Photon">
+          <source src="Photon.mp3" type="audio/mp3">
+          <source src="Photon.ogg" type="audio/ogg">
+        </audio>
+        
+        <audio id="Shrapnel">
+          <source src="Shrapnel.mp3" type="audio/mp3">
+          <source s`enter code here`rc="Shrapnel.ogg" type="audio/ogg">
+        </audio>
+
+    	<script>
+    // Arrow key codes
+    var UP = 38,
+        DOWN = 40,
+        RIGHT = 39,
+        LEFT = 37;
+    //wasd keycodes
+
+    var W = 87,
+        A = 65, 
+        S = 83,
+        D = 68;
+
+    // rocket object
+    var rocket = {
+    	img: document.querySelector("#rocket"),
+    	x: 490,
+    	y: 390,
+    	width: 100
+    };
+
+    var UFO = {
+    	img: document.querySelector("#ufo"),
+    	x: 300,
+    	y: 200,
+    	width: 200  // Need to read up on x,y positioning.S
+    };
+
+    //sound array 
+    var sounds = ["#Photon", "#Shrapnel"];
+
+    var currentSound = null;
+
+    const velocity = 8;
+
+    let torpedo = document.querySelector("#torpedo"),
+        startBtn = document.querySelector("#start"),
+        fireBtn = document.querySelector("#fire"),
+        ufo = document.querySelector("#ufo");
+
+
+    // Initialize objects on the screen
+    render ( );
+
+
+    /*
+    function startGameHandler( ) {
+    	"use strict"
+        // Hide the intro screen, show the game screen
+    	introScreen.style.display = "none";
+    	gameScreen.style.display = "block";
+    	rocket.img.style.display = "block";
+    	ufo.style.display = "block";
+    }
+    */
+
+    const startGameHandler = ( ) => { 
+    "use strict"; 
+    // Hide the intro screen, show the game screen 
+    introScreen.style.display = "none"; 
+    gameScreen.style.display = "block"; 
+    rocket.img.style.display = "block"; 
+    ufo.style.display = "block"; 
+    }; 
+
+    function fireTorpedoHandler( ) {
+    	"use strict"
+        // Fire the photon torpedo!
+    	// CSS animation occurs whenever torpedo
+    	// 'left' property changes value
+    	torpedo.style.visibility = "visible";
+    	torpedo.style.left = (rocket.x - 200)+ "px";
+    }
+      
+
+
+    const keydownHandler = event => {
+        "use strict"
+        if (event.keyCode == UP) {
+            rocket.y -= velocity;
+        }
+        if (event.keyCode == LEFT) {
+            rocket.x -= velocity;
+        }
+        if (event.keyCode === DOWN) {
+            rocket.y += velocity;
+        }
+        if (event.keyCode == RIGHT) {
+            rocket.x += velocity;
+        }
+        if (event.keyCode == W) {
+            UFO.y -= velocity;
+        }
+        if (event.keyCode == A) {
+            UFO.x -= velocity;
+        }
+        if (event.keyCode === S) {
+            UFO.y += velocity;
+        }
+        if (event.keyCode == D) {
+            UFO.x += velocity;
+        }
+
+        render( );
+    }
+
+
+    //moving the UFO
+    (function() {
+      var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
+        window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+      window.requestAnimationFrame = requestAnimationFrame;
+    })();
+
+    //neccessary variables
+    var clickX = 10;
+    var clickY = 10;
+
+    var keyW = false;
+    var keyA = false;
+    var keyS = false;
+    var keyD = false;
+
+    //main animation function
+    function ufoBooster() {
+      window.requestAnimationFrame(ufoBooster);
+      var canvas = document.getElementById("ufo");
+      
+      if (keyD == true) {
+        clickX += 1;
+      }
+      if (keyS == true) {
+        clickY += 1;
+      }
+      if (keyA == true) {
+        clickX--;
+      }
+      if (keyW == true) {
+        clickY--;
+      }
+    }
+    window.requestAnimationFrame(ufoBooster);
+
+    // Moved here to get the arrow function to work.
+    startBtn.addEventListener("click",startGameHandler,false);
+    fireBtn.addEventListener("click",fireTorpedoHandler,false)
+    window.addEventListener("keydown",keydownHandler,false);
+
+    function render( ) {
+    	"use strict"
+        
+     // position objects on the screen
+    	rocket.img.style.left = rocket.x + "px";
+    	rocket.img.style.top = rocket.y + "px";
+        UFO.img.style.left = UFO.x + "px";
+    	UFO.img.style.top = UFO.y + "px";
+        torpedo.style.left = (rocket.x +10) + "px";
+    	torpedo.style.top = (rocket.y+8) + "px";
+    	torpedo.style.visibility = "hidden";
+    }
+      </script>
+    </body>
+    </html>
