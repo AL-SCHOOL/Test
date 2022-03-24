@@ -1,15 +1,7 @@
 // Functions
-function Darts() {location.href = "../Darts/darts.htm";}
+function adam() {location.href = "adam.htm";}
 
-function TableTennis() {location.href = "tabletennis.htm";}
-
-function Adam() {location.href = "adam.htm";}
-
-function Erica() {location.href = "erica.htm";}
-
-function Karen() {location.href = "karen.htm";}
-
-function Anthony() {location.href = "anthony.htm";}
+function erica() {location.href = "erica.htm";}
 
 // When Start
 document.getElementById("playoff_line").style.display = "none";
