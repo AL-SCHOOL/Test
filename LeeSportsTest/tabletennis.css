@@ -1,0 +1,25 @@
+/* Scedule */
+#scedule {padding: 50px; width: 80%; margin-left: 10%; margin-right: 10%; margin-top: 20px; margin-bottom: 20px; background: #ffffff; border-radius: 25px;}
+#info {padding: 0px; margin-left: 30%; margin-right: 30%; margin-top: 20px;}
+#record {padding: 5px; float: left; text-align: center; width: 45%;}
+#stats {padding: 10px; float: right; background: #e6e6e6; border-radius: 10px; width: 45%;}
+#game {padding: 5px;}
+#playoff {padding: 5px;}
+#title {float: left; padding: 5px; font-weight: bold; font-size: 24px;}
+#player {float: left; padding: 5px; font-size: 24px;}
+#winlose {float: right; padding: 5px; font-weight: bold; font-size: 24px;}
+#score {float: right; padding: 5px; font-size: 24px; color: blue;}
+
+/* Layout */
+body {margin: 0px;}
+header {padding: 10px;}
+aside {background: #e6e6e6;}
+footer {text-align: center; padding: 10px;}
+
+/* Text */
+h1 {font-size: 48px; float: left; margin: 5px; margin-right: 15px;}
+h2 {font-size: 48px; margin: 5px; font-weight: bold;}
+h3 {font-size: 32px; margin: 0px;}
+
+/* Buttons */
+#navbuttons {font-size: 43px; float: left; margin: 5px; padding: 5px;}
