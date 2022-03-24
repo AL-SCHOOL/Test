@@ -1,7 +1,7 @@
 // Functions
-function adam() {location.href = "adam.htm";}
+function adam() {location.href = "adam.html";}
 
-function erica() {location.href = "erica.htm";}
+function erica() {location.href = "erica.html";}
 
 // When Start
 document.getElementById("playoff_line").style.display = "none";
